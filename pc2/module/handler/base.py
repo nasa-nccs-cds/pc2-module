@@ -1,4 +1,4 @@
-import json, string, random, abc, time
+import json, string, random, abc, time, traceback
 from enum import Enum, auto
 from typing import List, Dict, Any, Sequence, BinaryIO, TextIO, ValuesView, Tuple, Optional, Iterable
 from pc2.module.util.config import PC2Logger
@@ -200,8 +200,22 @@ class Module:
     @abc.abstractmethod
     def init( self ): pass
 
+    def getTbStr( self, ex ) -> str:
+        if ex.__traceback__  is None: return ""
+        tb = traceback.extract_tb( ex.__traceback__ )
+        return " ".join( traceback.format_list( tb ) )
 
+    def getErrorReport( self, ex: Exception ):
+        try:
+            errMsg = getattr( ex, 'message', repr(ex) )
+            return errMsg + ">~>" +  str( self.getTbStr(ex) )
+        except:
+            return repr(ex)
 
+    def getRequestParameter(self, requestSpec: Dict, pname: str ) -> str:
+        pvalue: str = requestSpec.get(pname)
+        if pvalue is None: raise Exception( f"Missing required parameter '{pname}' for {self.__class__.__name__} request")
+        return pvalue
 
 
 
