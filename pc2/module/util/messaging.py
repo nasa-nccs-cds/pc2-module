@@ -1,5 +1,5 @@
 from typing import List, Dict, Any, Sequence, BinaryIO, TextIO, ValuesView, Optional
-from stratus_endpoint.util.config import StratusLogger
+from pc2.module.util.config import PC2Logger
 import traceback
 from enum import Enum, auto
 
@@ -48,7 +48,7 @@ class ErrorRecord:
 class RequestMetadata:
 
     def __init__( self, ID: str ):
-        self.logger = StratusLogger.getLogger()
+        self.logger = PC2Logger.getLogger()
         self._messages = []
         self._error: ErrorRecord = None
         self._status = Status.IDLE

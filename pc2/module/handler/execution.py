@@ -1,7 +1,7 @@
 from typing import Dict, Any, Union, List, Callable, Optional, Iterable
-from stratus_endpoint.util.config import StratusLogger
+from pc2.module.util.config import PC2Logger
 import zmq, traceback, time, itertools, queue
-from stratus_endpoint.handler.base import Status, TaskHandle, TaskResult, Endpoint
+from pc2.module.handler.base import Status, TaskHandle, TaskResult, Endpoint
 from threading import Thread
 import abc, string, random, xarray as xa
 
@@ -10,7 +10,7 @@ class Executable:
 
     def __init__(self, requestSpec: Dict, inputs: List[TaskResult] = None, **kwargs ):
         self.parms = kwargs
-        self.logger =  StratusLogger.getLogger()
+        self.logger =  PC2Logger.getLogger()
         self.request = requestSpec
         self.inputs = inputs
         self.requestId = kwargs.get( "rid", self.randomStr(4) )
@@ -32,7 +32,7 @@ class SubmissionThread(Thread):
         self.job = job
         self.processResults = processResults
         self.processFailure = processFailure
-        self.logger =  StratusLogger.getLogger()
+        self.logger =  PC2Logger.getLogger()
 
     def run(self):
         start_time = time.time()
@@ -51,7 +51,7 @@ class TaskExecHandler(TaskHandle):
 
     def __init__( self, cid: str, job: Executable, **kwargs ):
         super(TaskExecHandler, self).__init__(**{"rid": job.requestId, "cid": cid, **kwargs})
-        self.logger = StratusLogger.getLogger()
+        self.logger = PC2Logger.getLogger()
         self.sthread = None
         self._processResults = True
         self.results = queue.Queue()
@@ -75,7 +75,7 @@ class TaskExecHandler(TaskHandle):
     def processResult( self, result: TaskResult ):
         self.results.put( result )
         self._status = Status.COMPLETED
-        self.logger.info(" ----------------->>> STRATUS REQUEST COMPLETED "  )
+        self.logger.info(" ----------------->>> PC2 REQUEST COMPLETED "  )
 
     def status(self):
         return self._status

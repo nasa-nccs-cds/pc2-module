@@ -26,35 +26,35 @@ from six import string_types, integer_types
 
 _IS_NUMBER = re.compile('^-?[0-9]+$')
 _IS_FLOAT = re.compile(r'^-?[0-9]+\.[0-9]*$|^-?\.[0-9]+$')
-STRATUS_CONFIG=os.path.expanduser("~/.stratus")
+PC2_CONFIG=os.path.expanduser("~/.pc2")
 
-class StratusFileLogger:
+class PC2FileLogger:
     logger = None
 
     @classmethod
     def getLogger(cls, lname ):
         if cls.logger is None:
-            cls.logger = logging.getLogger( "stratus-file" )
-            LOG_DIR = os.path.expanduser(os.path.join(STRATUS_CONFIG, "logs"))
+            cls.logger = logging.getLogger( "pc2-file" )
+            LOG_DIR = os.path.expanduser(os.path.join(PC2_CONFIG, "logs"))
             if not os.path.exists(LOG_DIR):  os.makedirs(LOG_DIR)
             timestamp = time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())
-            fh = logging.FileHandler("{}/stratus-{}-{}.log".format(LOG_DIR, lname, timestamp))
+            fh = logging.FileHandler("{}/pc2-{}-{}.log".format(LOG_DIR, lname, timestamp))
             fh.setLevel(logging.DEBUG)
             cls.logger.addHandler(fh)
         return cls.logger
 
-class StratusLogger:
+class PC2Logger:
     logger = None
 
     @classmethod
     def getLogger( cls ):
         if cls.logger is None:
-            cls.logger = logging.getLogger( "stratus" )
-            LOG_DIR = os.path.expanduser(os.path.join(STRATUS_CONFIG, "logs"))
+            cls.logger = logging.getLogger( "pc2" )
+            LOG_DIR = os.path.expanduser(os.path.join(PC2_CONFIG, "logs"))
             if not os.path.exists(LOG_DIR):  os.makedirs(LOG_DIR)
             timestamp = time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())
             cls.logger.setLevel(logging.DEBUG)
-            fh = logging.FileHandler("{}stratus-{}.log".format(LOG_DIR, timestamp))
+            fh = logging.FileHandler("{}pc2-{}.log".format(LOG_DIR, timestamp))
             fh.setLevel(logging.DEBUG)
             ch = logging.StreamHandler()
             ch.setLevel(logging.INFO)
