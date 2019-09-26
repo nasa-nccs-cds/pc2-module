@@ -1,7 +1,7 @@
 from typing import Dict, Any, Union, List, Callable, Optional, Iterable
 from pc2.module.util.config import PC2Logger
 import zmq, traceback, time, itertools, queue
-from pc2.module.handler.base import Status, TaskHandle, TaskResult, Endpoint
+from pc2.module.handler.base import Status, TaskHandle, TaskResult, Module
 from threading import Thread
 import abc, string, random, xarray as xa
 
@@ -104,21 +104,21 @@ class TaskExecHandler(TaskHandle):
         return self._exception
 
 
-class ExecEndpoint(Endpoint):
+class ExecEndpoint(Module):
     __metaclass__ = abc.ABCMeta
 
     """
-        This class is used to implement the capabilities of the Endpoint.
+        This class is used to implement the capabilities of the Module.
     """
 
     def __init__(self, **kwargs ):
-        Endpoint.__init__( self, **kwargs )
+        Module.__init__(self, **kwargs)
         self.handlers: Dict[str,TaskHandle] = {}
 
     def request(self, requestSpec: Dict, inputs: List[TaskResult] = None, **kwargs ) -> TaskHandle:
         rid: str = kwargs.get('rid', Executable.randomStr(4))
         cid: str = kwargs.get('cid', Executable.randomStr(4))
-        self.logger.info(f"EDAS Endpoint--> processing rid {rid}")
+        self.logger.info(f"EDAS Module--> processing rid {rid}")
         executable = self.createExecutable( requestSpec, inputs, **kwargs )
         handler = TaskExecHandler( cid, executable, **kwargs )
         handler.start()

@@ -102,7 +102,7 @@ class TaskHandle:
         return self._cid
 
     def getAssignParm(self, key: str, plen = 6 ) -> str :
-        return self._parms.get( key, Endpoint.randomStr(6) )
+        return self._parms.get(key, Module.randomStr(6))
 
     def hasClient(self, cid: str ) -> bool:
         return cid in self._clients
@@ -176,7 +176,7 @@ class FailedTask(TaskHandle):
     def status(self) ->  Status:
         return Status.ERROR
 
-class Endpoint:
+class Module:
     __metaclass__ = abc.ABCMeta
 
     def __init__( self, **kwargs ):

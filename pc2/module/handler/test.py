@@ -1,11 +1,11 @@
-from .base import Endpoint, TaskHandle, TaskResult, Status
+from .base import Module, TaskHandle, TaskResult, Status
 from typing import List, Dict, Any, Sequence, BinaryIO, TextIO, ValuesView, Tuple, Optional
 import time
 
-class TestEndpoint(Endpoint):
+class TestEndpoint(Module):
 
     def __init__( self, **kwargs ):
-        Endpoint.__init__( self, **kwargs )
+        Module.__init__(self, **kwargs)
         self._epas = [ f"test{index}" for index in range(10) ]
 
     def request(self, requestSpec: Dict, inputs: List[TaskResult] = None, **kwargs ) -> "TaskHandle":
