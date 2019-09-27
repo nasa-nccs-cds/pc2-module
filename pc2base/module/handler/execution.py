@@ -1,7 +1,7 @@
 from typing import Dict, Any, Union, List, Callable, Optional, Iterable
-from pc2.module.util.config import PC2Logger
+from pc2base.module.util.config import PC2Logger
 import zmq, traceback, time, itertools, queue
-from pc2.module.handler.base import Status, TaskHandle, TaskResult, Module
+from pc2base.module.handler.base import Status, TaskHandle, TaskResult, Module
 from threading import Thread
 import abc, string, random, xarray as xa
 

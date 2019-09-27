@@ -1,7 +1,7 @@
 import json, string, random, abc, time, traceback
 from enum import Enum, auto
 from typing import List, Dict, Any, Sequence, BinaryIO, TextIO, ValuesView, Tuple, Optional, Iterable
-from pc2.module.util.config import PC2Logger
+from pc2base.module.util.config import PC2Logger
 import xarray as xa
 from concurrent.futures import Future
 
@@ -216,6 +216,23 @@ class Module:
         pvalue: str = requestSpec.get(pname)
         if pvalue is None: raise Exception( f"Missing required parameter '{pname}' for {self.__class__.__name__} request")
         return pvalue
+
+class CelerySyncTaskHandle(TaskHandle):
+
+    def __init__(self, result: TaskResult, **kwargs):
+        TaskHandle.__init__( self, **kwargs )
+        self.logger = PC2Logger.getLogger()
+        self.result: TaskResult = result
+        self._exception = None
+
+    def getResult( self, **kwargs ) ->  Optional[TaskResult]:
+        return  self.result
+
+    def status(self) ->  Status:
+        return Status.COMPLETED
+
+    def exception(self) -> Optional[Exception]:
+        return self._exception
 
 
 

@@ -1,5 +1,5 @@
 from typing import List, Dict, Any, Sequence, BinaryIO, TextIO, ValuesView, Optional
-from pc2.module.util.config import PC2Logger
+from pc2base.module.util.config import PC2Logger
 import traceback
 from enum import Enum, auto
 
