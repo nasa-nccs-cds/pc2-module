@@ -63,7 +63,7 @@ class DemoModule(Module):
                 dset.to_netcdf(fileName)
         return CelerySyncTaskHandle( inputList[0] )
 
-    def shutdown( self, *args ):
+    def shutdown( self, *args, **kwargs ):
         self.logger.info( "Shutdown: " + str(args) )
 
 

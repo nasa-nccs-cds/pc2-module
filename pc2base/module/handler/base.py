@@ -192,7 +192,7 @@ class Module:
     def request(self, requestSpec: Dict, inputs: List[TaskResult] = None, **kwargs ) -> "TaskHandle": pass
 
     @abc.abstractmethod
-    def shutdown(self, **kwargs ): pass
+    def shutdown(self, *args, **kwargs ): pass
 
     @abc.abstractmethod
     def capabilities(self, type: str, **kwargs ) -> Dict: pass
