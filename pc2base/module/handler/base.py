@@ -214,7 +214,8 @@ class Module:
 
     def getRequestParameter(self, requestSpec: Dict, pname: str ) -> str:
         pvalue: str = requestSpec.get(pname)
-        if pvalue is None: raise Exception( f"Missing required parameter '{pname}' for {self.__class__.__name__} request")
+        if pvalue is None:
+            raise Exception( f"Missing required parameter '{pname}' for {self.__class__.__name__} request: request parameters= {requestSpec.keys()}")
         return pvalue
 
 class CelerySyncTaskHandle(TaskHandle):
